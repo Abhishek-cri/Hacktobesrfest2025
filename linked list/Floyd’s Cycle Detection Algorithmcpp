@@ -1,0 +1,59 @@
+
+// Tortoise and Hare Algorithm
+// floyd cycle detection algorithm
+#include <bits/stdc++.h>
+using namespace std;
+
+// Node structure
+struct Node {
+    int data;
+    Node* next;
+    Node(int val) {
+        data = val;
+        next = NULL;
+    }
+};
+
+// Function to detect a loop in the linked list
+bool detectLoop(Node* head) {
+    Node* slow = head;
+    Node* fast = head;
+
+    while (fast != NULL && fast->next != NULL) {
+        slow = slow->next;         // Move slow by 1
+        fast = fast->next->next;   // Move fast by 2
+
+        if (slow == fast) {        // If both meet, loop exists
+            return true;
+        }
+    }
+    return false; // No loop found
+}
+
+// Helper function to print the result
+void checkLoop(Node* head) {
+    if (detectLoop(head))
+        cout << "Loop detected in the linked list 🔁" << endl;
+    else
+        cout << "No loop found ✅" << endl;
+}
+
+int main() {
+    // Create a linked list: 1 -> 2 -> 3 -> 4 -> 5
+    Node* head = new Node(1);
+    head->next = new Node(2);
+    head->next->next = new Node(3);
+    head->next->next->next = new Node(4);
+    head->next->next->next->next = new Node(5);
+
+    // Create a loop for testing: connect 5 -> 2
+    head->next->next->next->next->next = head->next;
+
+    checkLoop(head);  // Should print: Loop detected
+
+    return 0;
+}
+
+
+output
+// Loop detected in the linked list 🔁
